@@ -1,5 +1,7 @@
 package com.gautam.medicinetime.data;
 
+import android.net.Uri;
+
 import androidx.annotation.VisibleForTesting;
 
 import com.gautam.medicinetime.data.source.History;
@@ -50,8 +52,8 @@ public class FakeMedicineLocalDataSource implements MedicineDataSource {
         Date date = mCurrentTime.getTime();
         String dateString = new SimpleDateFormat("MMM d, yyyy", Locale.getDefault()).format(date);
 
-        addPills("Paracetamol", 1);
-        addPills("Crocin", 2);
+        addPills("Paracetamol", 1, null);
+        addPills("Crocin", 2, null);
         int alarmId = new Random().nextInt(100);
         addMedicine(1, hour, minute, "Paracetamol", "1.0", "tablet(s)", alarmId);
         addMedicine(2, hour + 2, minute + 1, "Crocin", "2.0", "capsule(s)", alarmId);
@@ -72,8 +74,8 @@ public class FakeMedicineLocalDataSource implements MedicineDataSource {
         HISTORY_SERVICE_DATA.put(pillName, history);
     }
 
-    private static void addPills(String pillName, long pillId) {
-        Pills pills = new Pills(pillName, pillId);
+    private static void addPills(String pillName, long pillId, Uri pillUri) {
+        Pills pills = new Pills(pillName, pillId, pillUri); //todo
         PILLS_SERVICE_DATA.put(String.valueOf(pillId), pills);
     }
 

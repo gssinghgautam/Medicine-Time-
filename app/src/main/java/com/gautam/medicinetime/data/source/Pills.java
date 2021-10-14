@@ -1,5 +1,7 @@
 package com.gautam.medicinetime.data.source;
 
+import android.net.Uri;
+
 import com.gautam.medicinetime.data.source.MedicineAlarm;
 
 import java.util.Collections;
@@ -16,15 +18,26 @@ public class Pills {
 
     private long pillId;
 
+    private Uri pillUri;
+
     private List<MedicineAlarm> medicineAlarms = new LinkedList<MedicineAlarm>();
 
     public Pills(){
 
     }
 
-    public Pills(String pillName, long pillId) {
+    public Pills(String pillName, long pillId, Uri pillUri) {
         this.pillName = pillName;
         this.pillId = pillId;
+        this.pillUri = pillUri;
+    }
+
+    public Uri getPillUri() {
+        return pillUri;
+    }
+
+    public void setPillUri(Uri pillUri) {
+        this.pillUri = pillUri;
     }
 
     public String getPillName() { return pillName; }

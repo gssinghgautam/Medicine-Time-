@@ -69,4 +69,5 @@ dependencies {
     implementation "com.github.sundeepk:compact-calendar-view:$rootProject.compactCalendarViewVersion"
     implementation 'com.jakewharton:butterknife:10.2.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:10.2.1'
+    implementation 'com.karumi:dexter:6.2.3'
 }

@@ -104,7 +104,6 @@
                 android:visibility="gone"
                 android:src="@drawable/image_reminder_not_taken" />
         </RelativeLayout>
-
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

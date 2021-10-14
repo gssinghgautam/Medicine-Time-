@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Vibrator;
+
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
@@ -14,9 +16,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.gautam.medicinetime.Injection;
 import com.gautam.medicinetime.R;
+import com.gautam.medicinetime.addmedicine.AddMedicineContract;
 import com.gautam.medicinetime.data.source.History;
 import com.gautam.medicinetime.data.source.MedicineAlarm;
+import com.gautam.medicinetime.data.source.MedicineDataSource;
+import com.gautam.medicinetime.data.source.Pills;
 import com.gautam.medicinetime.medicine.MedicineActivity;
 import com.gautam.medicinetime.views.RobotoBoldTextView;
 import com.gautam.medicinetime.views.RobotoRegularTextView;
@@ -53,6 +59,9 @@ public class ReminderFragment extends Fragment implements ReminderContract.View 
     @BindView(R.id.iv_ignore_med)
     ImageView ivIgnoreMed;
 
+    @BindView(R.id.medicine_img)
+    ImageView ivMedicineImg;
+
     @BindView(R.id.iv_take_med)
     ImageView ivTakeMed;
 
@@ -71,10 +80,16 @@ public class ReminderFragment extends Fragment implements ReminderContract.View 
 
     private ReminderContract.Presenter presenter;
 
+
+
+    @NonNull
+    private MedicineDataSource mMedicineRepository;
+
     static ReminderFragment newInstance(long id) {
         Bundle args = new Bundle();
         args.putLong(EXTRA_ID, id);
         ReminderFragment fragment = new ReminderFragment();
+        fragment.mMedicineRepository =  Injection.provideMedicineRepository(fragment.getContext());
         fragment.setArguments(args);
         return fragment;
     }
@@ -112,6 +127,13 @@ public class ReminderFragment extends Fragment implements ReminderContract.View 
         tvMedTime.setText(medicineAlarm.getStringTime());
         tvMedicineName.setText(medicineAlarm.getPillName());
         tvDoseDetails.setText(medicineAlarm.getFormattedDose());
+        Pills pills = mMedicineRepository.getPillsByName(medicineAlarm.getPillName());
+        try {
+            Toast.makeText(getContext(), "sadas: "+pills.getPillUri()+pills.getPillId(), Toast.LENGTH_SHORT).show();
+            ivMedicineImg.setImageURI(pills.getPillUri());
+        } catch (NullPointerException e) {
+
+        }
     }
 
     @Override
